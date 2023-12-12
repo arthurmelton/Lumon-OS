@@ -1,57 +1,52 @@
-#include <assert.h>
-#include <fcntl.h>
-#include <linux/fb.h>
-#include <stdint.h>
-#include <stdio.h>
-#include <sys/ioctl.h>
-#include <sys/mman.h>
+#include <assets/lumon_logo.h>
+#include <flame/flame.h>
+#include <flame/xbm.h>
 #include <unistd.h>
-#include <lumon_logo.h>
+#include <sys/time.h>
+#include <stdio.h>
 
 int main(int argc, char *argv[]) {
-    printf("\033[30m\033[8m\033c\033[999E\n");
+    struct flame screen = flame_init();
+    flame_clear_screen(screen);
 
-	int fb = open("/dev/fb0", O_RDWR);
-	if (!fb) {
-		printf("Error opening frame buffer\n");
-		return 1;
-	}
+    int x = 1;
+    int y = 1;
 
-	struct fb_var_screeninfo info = (struct fb_var_screeninfo){};
-	if (ioctl(fb, FBIOGET_VSCREENINFO, &info)) {
-		printf("Error with this stuff\n");
-		return 1;
-	}
+    int offset_x = 0;
+    int offset_y = 0;
 
-	size_t len = 4 * info.xres * info.yres;
-    int fb_width = info.xres;
+    struct timeval before, after, delta;
 
-	char *buf = mmap(NULL, len, PROT_READ | PROT_WRITE, MAP_SHARED, fb, 0);
-	if (buf == MAP_FAILED) {
-		printf("Map failed\n");
-		return 1;
-	}
+    while(1) {
+        gettimeofday(&before, NULL);
 
-    for (int y = 0; y < LUMON_LOGO_HEIGHT; y++) {
-        for (int x = 0; x < LUMON_LOGO_WIDTH; x++) {
-            int offset = (y * fb_width + x)*4;
-            if (LUMON_LOGO[(y*LUMON_LOGO_WIDTH+x)/8] & (1<<((y*LUMON_LOGO_WIDTH+x)%8))) {
-                buf[offset] = 255;
-                buf[offset+1] = 255;
-                buf[offset+2] = 255;
-                buf[offset+3] = 0;
-            }
-            else {
-                buf[offset] = 0;
-                buf[offset+1] = 0;
-                buf[offset+2] = 0;
-                buf[offset+3] = 0;
-            }
+        flame_clear(screen);
+
+        flame_xbm(screen, offset_x, offset_y, LUMON_LOGO, LUMON_LOGO_WIDTH, LUMON_LOGO_HEIGHT, 0x00FFFFFF, 0x00000000);
+
+        flame_draw(screen);
+
+        printf("\n"); // refresh screen
+
+        offset_x+=x;
+        offset_y+=y;
+
+        if (offset_x == 424 || offset_x == 0) {
+            x*=-1;
         }
-        printf("\n");
+
+        if (offset_y == 459 || offset_x == 0) {
+            y*=-1;
+        }
+
+        gettimeofday(&after, NULL);
+        timersub(&after, &before, &delta);
+
+        sleep(0.1 - (float)delta.tv_usec/1000000);
     }
 
-	sleep(999999999);
+
+    //sleep(999999999);
 
 	return 0;
 }

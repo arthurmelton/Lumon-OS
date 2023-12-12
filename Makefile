@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-static -Isrc -O2 -Wall
+CFLAGS=-static -Isrc -Ofast -flto=8 -ftree-vectorize -floop-interchange -ftree-loop-distribution -floop-strip-mine -floop-block -Wall
 KERNEL=6.6
 JOBS=$(shell nproc)
 
@@ -36,7 +36,7 @@ create_img:
 	sed -i "s/VERSION/$(KERNEL)/g" build/mnt/boot/grub/grub.cfg
 
 build_program:
-	$(CC) $(CFLAGS) src/main.c -o build/initramfs/init
+	$(CC) $(CFLAGS) src/flame/**.c src/main.c -lm -o build/initramfs/init
 	chmod +x build/initramfs/init
 
 build_iso:
