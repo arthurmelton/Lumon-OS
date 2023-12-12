@@ -74,4 +74,6 @@ void flame_draw(struct flame screen) {
             screen.screen[real_offset] = screen.buf[virtual_offset];
         }
     }
+
+    printf("\n"); // Release the buffer atleast when testing, not in OS
 }
