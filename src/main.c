@@ -1,4 +1,4 @@
-#include <assets/lumon_logo.h>
+#include <assets/lumon_logo.xbm>
 #include <flame/flame.h>
 #include <flame/xbm.h>
 #include <unistd.h>
@@ -12,7 +12,7 @@ int main(int argc, char *argv[]) {
     int x = 1;
     int y = 1;
 
-    int offset_x = 0;
+    int offset_x = (screen.width-LUMON_LOGO_WIDTH)/2;
     int offset_y = 0;
 
     struct timeval before, after, delta;
@@ -26,16 +26,14 @@ int main(int argc, char *argv[]) {
 
         flame_draw(screen);
 
-        printf("\n"); // refresh screen
-
         offset_x+=x;
         offset_y+=y;
 
-        if (offset_x == 424 || offset_x == 0) {
+        if (offset_x + LUMON_LOGO_WIDTH == screen.width || offset_x == 0) {
             x*=-1;
         }
 
-        if (offset_y == 459 || offset_x == 0) {
+        if (offset_y + LUMON_LOGO_HEIGHT == screen.height || offset_y == 0) {
             y*=-1;
         }
 
