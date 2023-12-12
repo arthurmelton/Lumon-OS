@@ -5,14 +5,14 @@
 #define FLAME
 
 struct flame {
-    // Everything for internals
+	// Everything for internals
 	struct fb_var_screeninfo info;
-    uint32_t *screen;
+	uint32_t *screen;
 
-    // Public
-    int width;
-    int height;
-    uint32_t *buf;
+	// Public
+	int width;
+	int height;
+	uint32_t *buf;
 };
 
 struct flame flame_init();
