@@ -24,4 +24,6 @@ void flame_clear(struct flame screen);
 
 void flame_draw(struct flame screen, int x, int y, uint32_t color);
 
+void flame_refresh();
+
 #endif

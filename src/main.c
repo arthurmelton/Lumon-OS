@@ -26,7 +26,7 @@ int main(int argc, char *argv[]) {
 
 		boot_animation(screen, frame, &screen_state);
 
-		printf("\n");  // Release the buffer atleast when testing, not in OS
+		flame_refresh();
 
 		gettimeofday(&after, NULL);
 		timersub(&after, &before, &delta);

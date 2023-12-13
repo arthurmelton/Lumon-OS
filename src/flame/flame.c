@@ -73,3 +73,7 @@ void flame_draw(struct flame screen, int x, int y, uint32_t color) {
 		}
 	}
 }
+
+void flame_refresh() {
+	printf("\n");  // Release the buffer atleast when testing, not in OS
+}
