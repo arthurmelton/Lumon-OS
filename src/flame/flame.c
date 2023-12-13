@@ -33,28 +33,10 @@ struct flame flame_init() {
 		exit(1);
 	}
 
-	uint32_t *frame = malloc(WIDTH * HEIGHT * sizeof(uint32_t));
+	int border = info.xres * 3 / 4 - info.yres;
 
-	if (!frame) {
-		printf("Failed to allocate for sceen.\n");
-		exit(1);
-	}
-	return (struct flame){info, buf, WIDTH, HEIGHT, frame};
-}
-
-void flame_clear(struct flame screen) {
-	memset(screen.buf, 0, WIDTH * HEIGHT * 4);
-}
-
-void flame_clear_screen(struct flame screen) {
-	memset(screen.screen, 0, 4 * screen.info.xres * screen.info.yres);
-}
-
-void flame_draw(struct flame screen) {
-	int border = screen.info.xres * 3 / 4 - screen.info.yres;
-
-	int vertical_margin = 0;
 	int horizontal_margin = 0;
+	int vertical_margin = 0;
 
 	if (border > 0) {
 		horizontal_margin = border / 2;
@@ -62,19 +44,32 @@ void flame_draw(struct flame screen) {
 		vertical_margin = border * -1 / 2;
 	}
 
-	float y_scale = (float)(screen.info.yres - vertical_margin * 2) / HEIGHT;
-	float x_scale = (float)(screen.info.xres - horizontal_margin * 2) / WIDTH;
+	float y_scale = (float)(info.yres - vertical_margin * 2) / HEIGHT;
+	float x_scale = (float)(info.xres - horizontal_margin * 2) / WIDTH;
 
-	for (float y = 0; y < screen.info.yres - vertical_margin * 2; y++) {
-		for (float x = 0; x < screen.info.xres - horizontal_margin * 2; x++) {
-			int real_offset = (y + vertical_margin) * screen.info.xres + x +
-							  horizontal_margin;
-			int virtual_offset =
-				round(y / y_scale) * WIDTH + round(x / x_scale);
+	return (struct flame){
+		info,  buf,	  horizontal_margin, vertical_margin, x_scale, y_scale,
+		WIDTH, HEIGHT};
+}
 
-			screen.screen[real_offset] = screen.buf[virtual_offset];
+void flame_clear(struct flame screen) {
+	memset(screen.screen, 0, 4 * screen.info.xres * screen.info.yres);
+}
+
+void flame_draw(struct flame screen, int x, int y, uint32_t color) {
+	if (color != 1) {
+		float y_float = screen.y_scale * y;
+		float x_float = screen.x_scale * x;
+
+		int real_offset =
+			((int)y_float + screen.vertical_margin) * screen.info.xres +
+			(int)x_float + screen.horizontal_margin;
+
+		for (int i = 0; i < ceil(screen.y_scale); i++) {
+			for (int x = 0; x < ceil(screen.x_scale); x++) {
+				*(screen.screen + real_offset + x) = color;
+			}
+			real_offset += screen.info.xres;
 		}
 	}
-
-	printf("\n");  // Release the buffer atleast when testing, not in OS
 }

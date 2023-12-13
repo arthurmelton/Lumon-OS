@@ -9,13 +9,15 @@
 
 int main(int argc, char *argv[]) {
 	struct flame screen = flame_init();
-	flame_clear_screen(screen);
+	flame_clear(screen);
 
 	unsigned long long int frame = 0;
 
 	enum state screen_state = BootText;
 
 	struct timeval before, after, delta;
+
+	int delta_time = 16666;
 
 	while (1) {
 		gettimeofday(&before, NULL);
@@ -24,12 +26,17 @@ int main(int argc, char *argv[]) {
 
 		boot_animation(screen, frame, &screen_state);
 
-		flame_draw(screen);
+		printf("\n");  // Release the buffer atleast when testing, not in OS
 
 		gettimeofday(&after, NULL);
 		timersub(&after, &before, &delta);
 
-		usleep(16666 - delta.tv_usec);
+		delta_time = delta.tv_usec;
+
+		if (delta_time < 16666) {
+			usleep(16666 - delta_time);
+		}
+
 		frame++;
 	}
 
