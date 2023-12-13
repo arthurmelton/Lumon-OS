@@ -19,21 +19,28 @@ static char startup_print[] =
 int offset_x = 32;
 int offset_y = 32;
 
+// There are 319 chars to print, and with 60 frames per second, you can see how
+// long it takes to print all of this
+#define PRINT_PER_FRAME 4
+
 void boot_text(struct flame screen, unsigned long long int frame,
 			   enum state *screen_state) {
 	if (*screen_state == BootText) {
-		if (frame == sizeof(startup_print) / sizeof(*startup_print)) {
-			*screen_state = BootAnimation;
-			return;
-		}
-		if (startup_print[frame] == '\n') {
-			offset_y += 20;
-			offset_x = 32;
-		} else {
-			flame_xbm(screen, offset_x, offset_y,
-					  IBM_VGA_8x16 + startup_print[frame] * 16, 8, 16,
-					  0x00FFFFFF, 0x00000000);
-			offset_x += 9;
+		for (int i = frame * PRINT_PER_FRAME;
+			 i < frame * PRINT_PER_FRAME + PRINT_PER_FRAME; i++) {
+			if (i == sizeof(startup_print) / sizeof(*startup_print)) {
+				*screen_state = BootAnimation;
+				return;
+			}
+			if (startup_print[i] == '\n') {
+				offset_y += 20;
+				offset_x = 32;
+			} else {
+				flame_xbm(screen, offset_x, offset_y,
+						  IBM_VGA_8x16 + startup_print[i] * 16, 8, 16,
+						  0x00FFFFFF, 0x00000000);
+				offset_x += 9;
+			}
 		}
 	}
 }
