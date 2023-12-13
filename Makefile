@@ -36,7 +36,7 @@ create_img:
 	sed -i "s/VERSION/$(KERNEL)/g" build/mnt/boot/grub/grub.cfg
 
 build_program:
-	$(CC) $(CFLAGS) src/flame/**.c src/main.c -lm -o build/initramfs/init
+	$(CC) $(CFLAGS) src/flame/**.c src/scene/**.c src/main.c -lm -o build/initramfs/init
 	chmod +x build/initramfs/init
 
 build_iso:
