@@ -5,14 +5,20 @@
 void flame_xbm(struct flame screen, int offset_x, int offset_y, char *image,
 			   int width, int height, uint32_t foreground,
 			   uint32_t background) {
+	char *offset = image;
+	char index = 0;
 	for (int y = 0; y < height; y++) {
 		for (int x = 0; x < width; x++) {
-			if (y > 0 && y < screen.height && x > 0 && x < screen.width) {
-				if (image[(y * width + x) / 8] & (1 << ((y * width + x) % 8))) {
-					flame_draw(screen, x + offset_x, y + offset_y, foreground);
-				} else {
-					flame_draw(screen, x + offset_x, y + offset_y, background);
-				}
+			if (index == 8) {
+				offset++;
+				index = 0;
+			}
+			index++;
+
+			if (*offset & (1 << (index))) {
+				flame_draw(screen, x + offset_x, y + offset_y, foreground);
+			} else {
+				flame_draw(screen, x + offset_x, y + offset_y, background);
 			}
 		}
 	}
