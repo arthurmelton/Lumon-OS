@@ -57,7 +57,7 @@ void flame_clear(struct flame screen) {
 }
 
 void flame_draw(struct flame screen, int x, int y, uint32_t color) {
-	if (color != 1) {
+	if (color != 1 && x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT) {
 		float y_float = screen.y_scale * y;
 		float x_float = screen.x_scale * x;
 

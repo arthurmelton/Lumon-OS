@@ -33,6 +33,8 @@ int main(int argc, char *argv[]) {
 
 		delta_time = delta.tv_usec;
 
+		// printf("%d\n", delta_time);
+
 		if (delta_time < 16666) {
 			usleep(16666 - delta_time);
 		}
