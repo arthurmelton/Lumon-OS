@@ -1,3 +1,5 @@
+#include <scene/state.h>
+
 #ifndef BOOT_TEXT
 #define BOOT_TEXT
 

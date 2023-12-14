@@ -1,3 +1,5 @@
+#include <scene/state.h>
+
 #ifndef BOOT_ANIMATION
 #define BOOT_ANIMATION
 
