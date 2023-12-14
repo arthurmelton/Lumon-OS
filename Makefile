@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-static -Isrc -Ofast -flto=8 -ftree-vectorize -floop-interchange -ftree-loop-distribution -floop-strip-mine -floop-block -Wall
+CFLAGS=-static -Isrc -march=x86-64 -Ofast -ffast-math -flto=8 -ftree-vectorize -floop-interchange -ftree-loop-distribution -floop-strip-mine -floop-block -Wall
 KERNEL=6.6
 JOBS=$(shell nproc)
 
