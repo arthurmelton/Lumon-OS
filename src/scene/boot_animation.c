@@ -16,7 +16,7 @@ void boot_animation(struct flame screen, unsigned long long int frame,
 
 		flame_xbm(screen, (screen.width - LUMON_LOGO_WIDTH) / 2,
 				  (screen.height - LUMON_LOGO_HEIGHT) / 2, LUMON_LOGO,
-				  LUMON_LOGO_WIDTH, LUMON_LOGO_HEIGHT, 0x00FFFFFF, 0x00000000);
+				  LUMON_LOGO_WIDTH, LUMON_LOGO_HEIGHT, 0x00FFFFFF, 0x01000000);
 
 		flame_refresh();
 
