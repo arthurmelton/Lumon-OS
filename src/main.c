@@ -19,6 +19,10 @@ int main(int argc, char *argv[]) {
 
 	int delta_time = 16666;
 
+#if _DEBUG
+	int peak = 0;
+#endif
+
 	while (1) {
 		gettimeofday(&before, NULL);
 
@@ -33,7 +37,12 @@ int main(int argc, char *argv[]) {
 
 		delta_time = delta.tv_usec;
 
-		// printf("%d\n", delta_time);
+#if _DEBUG
+		if (delta_time > peak) {
+			peak = delta_time;
+		}
+		printf("%d %d\n", delta_time, peak);
+#endif
 
 		if (delta_time < 16666) {
 			usleep(16666 - delta_time);

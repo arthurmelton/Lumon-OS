@@ -3,6 +3,9 @@ CFLAGS=-static -Isrc -Ofast -flto=8 -ftree-vectorize -floop-interchange -ftree-l
 KERNEL=6.6
 JOBS=$(shell nproc)
 
+debug_program: CFLAGS += -g -D_DEBUG
+debug_program: build_program
+
 build: create_img create_initramfs build_program build_kernel cp_initramfs build_iso patch_grub
 
 download_kernel:
