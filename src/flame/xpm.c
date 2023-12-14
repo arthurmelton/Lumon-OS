@@ -51,7 +51,7 @@ void flame_xpm(struct flame screen, int offset_x, int offset_y, char *xpm[]) {
 	char *current = malloc(chars_per_pixel);
 
 	for (int y = 0; y < height; y++) {
-		int color_map = &xpm[colors_count + 1 + y][0];
+		char *color_map = &xpm[colors_count + 1 + y][0];
 
 		for (int x = 0; x < width; x++) {
 			memcpy(current, color_map, chars_per_pixel);
