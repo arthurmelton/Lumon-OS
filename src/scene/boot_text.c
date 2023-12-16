@@ -38,7 +38,7 @@ void boot_text(struct flame screen, unsigned long long int frame,
 			} else {
 				flame_xbm(screen, offset_x, offset_y,
 						  IBM_VGA_8x16 + startup_print[i] * 16, 8, 16,
-						  0x00FFFFFF, 0x01000000);
+						  0x00AAFFAA, 0x01000000);
 				offset_x += 9;
 			}
 		}

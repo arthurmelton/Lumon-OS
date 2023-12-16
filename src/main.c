@@ -1,5 +1,6 @@
 #include <flame/flame.h>
 #include <flame/xbm.h>
+#include <flame/raw.h>
 #include <scene/boot_animation.h>
 #include <scene/boot_text.h>
 #include <scene/state.h>
@@ -7,9 +8,13 @@
 #include <sys/time.h>
 #include <unistd.h>
 
+#include <assets/BACKGROUND.raw>
+
 int main(int argc, char *argv[]) {
 	struct flame screen = flame_init();
 	flame_clear(screen);
+
+	flame_raw(screen, 0, 0, BACKGROUND, BACKGROUND_WIDTH, BACKGROUND_HEIGHT);
 
 	unsigned long long int frame = 0;
 
