@@ -49,7 +49,7 @@ patch_grub:
 	sed -i 's/Welcome to GRUB!/\x0\x0\x0\x0\x0\x0\x0\x0\x0\x0\x0\x0\x0\x0\x0\x0/g' LUMON.iso
 
 format:
-	find src -iname "*.h" -o -iname "*.c" | xargs clang-format -style="{BasedOnStyle: Google, UseTab: Always, IndentWidth: 4, TabWidth: 4}" -i
+	find src -iname "*.h" -o -iname "*.c" -o -iname "*.xbm" -o -iname "*.xpm" -o -iname "*.raw" | xargs clang-format -style="{BasedOnStyle: Google, UseTab: Always, IndentWidth: 4, TabWidth: 4}" -i
 
 clean:
 	cd linux-kernel && make clean

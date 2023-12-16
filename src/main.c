@@ -1,6 +1,6 @@
 #include <flame/flame.h>
-#include <flame/xbm.h>
 #include <flame/raw.h>
+#include <flame/xbm.h>
 #include <scene/boot_animation.h>
 #include <scene/boot_text.h>
 #include <scene/state.h>
