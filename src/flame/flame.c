@@ -9,9 +9,6 @@
 #include <sys/mman.h>
 #include <unistd.h>
 
-#define WIDTH 1024
-#define HEIGHT 768
-
 struct flame flame_init() {
 	int fb = open("/dev/fb0", O_RDWR);
 	if (!fb) {

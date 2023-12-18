@@ -4,6 +4,9 @@
 #ifndef FLAME
 #define FLAME
 
+#define WIDTH 1024
+#define HEIGHT 768
+
 struct flame {
 	// Everything for internals
 	struct fb_var_screeninfo info;

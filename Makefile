@@ -28,6 +28,7 @@ create_initramfs:
 	mknod -m 622 build/initramfs/dev/console c 5 1
 	mknod -m 622 build/initramfs/dev/tty0 c 4 0
 	mknod -m 622 build/initramfs/dev/fb0 c 29 0
+	mknod -m 622 build/initramfs/dev/input/mice c 13 63
 	echo 7 > build/initramfs/proc/sys/kernel/printk
 
 cp_initramfs:

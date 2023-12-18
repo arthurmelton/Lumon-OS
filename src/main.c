@@ -1,6 +1,8 @@
+#include "scene/cursor.h"
 #include <flame/flame.h>
 #include <flame/raw.h>
 #include <flame/xbm.h>
+#include <flame/input.h>
 #include <scene/boot_animation.h>
 #include <scene/boot_text.h>
 #include <scene/state.h>
@@ -13,6 +15,8 @@
 int main(int argc, char *argv[]) {
 	struct flame screen = flame_init();
 	flame_clear(screen);
+
+    input_init();
 
 	flame_raw(screen, 0, 0, BACKGROUND, BACKGROUND_WIDTH, BACKGROUND_HEIGHT);
 
@@ -34,6 +38,8 @@ int main(int argc, char *argv[]) {
 		boot_text(screen, frame, &screen_state);
 
 		boot_animation(screen, frame, &screen_state);
+
+        draw_cursor(screen, &screen_state, get_mice());
 
 		flame_refresh();
 
