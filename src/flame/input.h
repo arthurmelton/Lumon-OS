@@ -4,9 +4,9 @@
 struct mice {
 	int x;
 	int y;
-    int left;
-    int right;
-    int middle;
+	int left;
+	int right;
+	int middle;
 };
 
 void input_init();
